@@ -14,5 +14,8 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 
+app.UseCatalogModule()
+   .UseBasketModule()
+   .UseOrderingModule();
 
 app.Run();
