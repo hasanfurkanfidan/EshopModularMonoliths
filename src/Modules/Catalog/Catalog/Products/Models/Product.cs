@@ -1,8 +1,8 @@
-﻿using Shared.DDD;
+﻿using Catalog.Products.Events;
 
 namespace Catalog.Products.Models
 {
-    public class Product : Entity<Guid>
+    public class Product : Aggregate<Guid>
     {
         public string Name { get; private set; } = default!;
         public List<string> Category { get; private set; } = new();
@@ -25,6 +25,7 @@ namespace Catalog.Products.Models
                 Price = price
             };
 
+            product.AddDomainEvent(new ProductCreatedEvent(product));
             return product;
         }
 
@@ -39,6 +40,11 @@ namespace Catalog.Products.Models
             Description = description;
             ImageFile = imageFile;
             Price = price;
+
+            if (price != Price)
+            {
+                AddDomainEvent(new ProductPriceChangedEvent(this));
+            }
         }
     }
 }
