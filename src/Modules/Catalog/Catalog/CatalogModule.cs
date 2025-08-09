@@ -1,9 +1,4 @@
-﻿using Catalog.Data;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-
+﻿
 namespace Catalog
 {
     public static class CatalogModule
@@ -19,6 +14,7 @@ namespace Catalog
 
         public static IApplicationBuilder UseCatalogModule(this IApplicationBuilder applicationBuilder)
         {
+            applicationBuilder.UseMigration<CatalogDbContext>();
             return applicationBuilder;
         }
     }
