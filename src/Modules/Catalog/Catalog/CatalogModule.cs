@@ -1,4 +1,7 @@
 ﻿
+using Catalog.Data.Seed;
+using Shared.Data.Seed;
+
 namespace Catalog
 {
     public static class CatalogModule
@@ -8,7 +11,7 @@ namespace Catalog
             var connectionString = configuration.GetConnectionString("Database");
 
             services.AddDbContext<CatalogDbContext>(options => options.UseNpgsql(connectionString));
-
+            services.AddScoped<IDataSeeder, CatalogDataSeeder>();
             return services;
         }
 
