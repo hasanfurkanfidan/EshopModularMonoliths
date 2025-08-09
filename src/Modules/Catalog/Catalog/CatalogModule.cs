@@ -1,5 +1,7 @@
 ﻿
 using Catalog.Data.Seed;
+using Microsoft.IdentityModel.Tokens;
+using Shared.Data.Interceptors;
 using Shared.Data.Seed;
 
 namespace Catalog
@@ -10,7 +12,11 @@ namespace Catalog
         {
             var connectionString = configuration.GetConnectionString("Database");
 
-            services.AddDbContext<CatalogDbContext>(options => options.UseNpgsql(connectionString));
+            services.AddDbContext<CatalogDbContext>(options =>
+            {
+                options.UseNpgsql(connectionString);
+                options.AddInterceptors(new AuditableEntityInterceptor());
+            });
             services.AddScoped<IDataSeeder, CatalogDataSeeder>();
             return services;
         }
